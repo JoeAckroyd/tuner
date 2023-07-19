@@ -162,32 +162,6 @@ Meter.prototype.update = function (deg) {
 	this.$pointer.style.transform = "rotate(" + deg + "deg)";
 };
 
-/**
- * the frequency histogram
- *
- * @param {string} selector
- * @constructor
- */
-const FrequencyBars = function (selector) {
-	this.$canvas = document.querySelector(selector);
-	this.$canvas.width = document.body.clientWidth;
-	this.$canvas.height = document.body.clientHeight / 2;
-	this.canvasContext = this.$canvas.getContext("2d");
-};
-
-/**
- * @param {Uint8Array} data
- */
-FrequencyBars.prototype.update = function (data) {
-	const length = 64; // low frequency only
-	const width = this.$canvas.width / length - 0.5;
-	this.canvasContext.clearRect(0, 0, this.$canvas.width, this.$canvas.height);
-	for (var i = 0; i < length; i += 1) {
-		this.canvasContext.fillStyle = "#ecf0f1";
-		this.canvasContext.fillRect(i * (width + 0.5), this.$canvas.height - data[i], width, data[i]);
-	}
-};
-
 const Notes = function (selector, tuner) {
 	this.tuner = tuner;
 	this.isAutoMode = true;
@@ -278,7 +252,6 @@ const Application = function () {
 	this.tuner = new Tuner(this.a4);
 	this.notes = new Notes(".notes", this.tuner);
 	this.meter = new Meter(".meter");
-	this.frequencyBars = new FrequencyBars(".frequency-bars");
 	this.update({
 		name: "A",
 		frequency: this.a4,
@@ -332,19 +305,10 @@ Application.prototype.start = function () {
 		});
 	});
 
-	this.updateFrequencyBars();
 
 	document.querySelector(".auto input").addEventListener("change", () => {
 		this.notes.toggleAutoMode();
 	});
-};
-
-Application.prototype.updateFrequencyBars = function () {
-	if (this.tuner.analyser) {
-		this.tuner.analyser.getByteFrequencyData(this.frequencyData);
-		this.frequencyBars.update(this.frequencyData);
-	}
-	requestAnimationFrame(this.updateFrequencyBars.bind(this));
 };
 
 Application.prototype.update = function (note) {
