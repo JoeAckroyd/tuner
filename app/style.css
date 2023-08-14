@@ -1,22 +1,23 @@
-html {
-  height: 100%;
+.fake-webflow-div {
+  width: 50%;
+  height: 50%;
 }
 
-body {
+.test-div {
   position: fixed;
   font-family: sans-serif;
   color: #2c3e50;
   margin: 0;
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
   cursor: default;
   user-select: none;
 }
 
 .notes {
   margin: auto;
-  width: 400px;
-  position: fixed;
+  width: 75%;
+  position: absolute;
   top: 50%;
   left: 0;
   right: 0;
@@ -41,12 +42,7 @@ body {
   overflow: -moz-scrollbars-none;
   white-space: nowrap;
   -ms-overflow-style: none;
-  -webkit-mask-image: -webkit-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0),
-    #fff,
-    rgba(255, 255, 255, 0)
-  );
+  -webkit-mask-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0), #fff, rgba(255, 255, 255, 0));
 }
 
 .notes-list::-webkit-scrollbar {
@@ -82,13 +78,13 @@ body {
 }
 
 .meter {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 50%;
-  width: 400px;
+  width: 100%;
   height: 33%;
-  margin: 0 auto 5vh auto;
+  margin: 0 auto;
 }
 
 .meter-pointer {
@@ -127,21 +123,6 @@ body {
 .meter-scale-strong {
   width: 2px;
   border-top-width: 20px;
-}
-
-.frequency-bars {
-  position: fixed;
-  bottom: 0;
-}
-
-@media (max-width: 768px) {
-  .meter {
-    width: 100%;
-  }
-
-  .notes {
-    width: 100%;
-  }
 }
 
 .swal-button {
